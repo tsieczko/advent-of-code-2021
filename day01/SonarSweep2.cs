@@ -4,17 +4,19 @@ using System.Linq;
 
 namespace advent_of_code_2021
 {
-	public class SonarSweep
+	public class SonarSweep2
 	{
 		public static void Run(string path)
 		{
 			var foundDepthStrings = File.ReadAllLines(path);
-			var foundDepths = foundDepthStrings.Select(x => int.Parse(x));
+			var foundDepths = foundDepthStrings.Select(x => int.Parse(x)).ToList();
 
-			int numIncreasedMeasurements = 0;
 			int previousDepth = -1;
-			foreach (var depth in foundDepths)
+			int numIncreasedMeasurements = 0;
+			for (int i = 1; i < foundDepths.Count() - 1; i++)
 			{
+				var depth = foundDepths[i-1] + foundDepths[i] + foundDepths[i+1];
+
 				if (previousDepth == -1)
 				{
 					Console.WriteLine($"{depth} (N/A - no previous measurement)");
