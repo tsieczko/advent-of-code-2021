@@ -4,7 +4,7 @@ namespace advent_of_code_2021
 	{
 		static void Main(string[] args)
 		{
-			SonarSweep.Run();
+			SonarSweep.Run(@"day01\test_input.txt");
 		}
 	}
 }
