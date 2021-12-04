@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\Day01\SonarSweep\SonarSweep.csproj" />
+    <ProjectReference Include="..\source\AdventOfCode2021.csproj" />
   </ItemGroup>
 
 </Project>
