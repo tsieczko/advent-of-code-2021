@@ -6,12 +6,12 @@ using System.Linq;
 namespace AdventOfCode2021Tests
 {
     [TestClass]
-    public class SonarSweet2Test
+    public class SonarSweep2Test
     {
         public string TestFolder { get; } = @"..\..\..\Day01";
 
         [TestMethod]
-        public void TestSonarSweep2TestInput()
+        public void SonarSweep2TestInput()
         {
             // read in test input
             var depths = File.ReadAllLines(Path.Combine(TestFolder, "test_input.txt")).Select(x => int.Parse(x)).ToArray();
@@ -21,7 +21,7 @@ namespace AdventOfCode2021Tests
         }
 
         [TestMethod]
-        public void TestSonarSweep2PuzzleInput()
+        public void SonarSweep2PuzzleInput()
         {
             // read in test input
             var depths = File.ReadAllLines(Path.Combine(TestFolder, "puzzle_input.txt")).Select(x => int.Parse(x)).ToArray();

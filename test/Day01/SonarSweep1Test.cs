@@ -11,7 +11,7 @@ namespace AdventOfCode2021Tests
         public string TestFolder { get; } = @"..\..\..\Day01";
 
         [TestMethod]
-        public void TestSonarSweep1TestInput()
+        public void SonarSweep1TestInput()
         {
             // read in test input
             var depths = File.ReadAllLines(Path.Combine(TestFolder, "test_input.txt")).Select(x => int.Parse(x)).ToArray();
@@ -21,7 +21,7 @@ namespace AdventOfCode2021Tests
         }
 
         [TestMethod]
-        public void TestSonarSweep1PuzzleInput()
+        public void SonarSweep1PuzzleInput()
         {
             // read in test input
             var depths = File.ReadAllLines(Path.Combine(TestFolder, "puzzle_input.txt")).Select(x => int.Parse(x)).ToArray();
