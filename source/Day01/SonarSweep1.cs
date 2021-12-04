@@ -4,7 +4,7 @@ namespace AdventOfCode2021
 	{
 		public static int Run(int[] depths)
 		{
-			int numIncreasedMeasurements = 0;
+			var numIncreasedMeasurements = 0;
 			for (var i = 1; i < depths.Length; i++)
 			{
 				if (depths[i] > depths[i-1])

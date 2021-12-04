@@ -1,47 +1,24 @@
-using System;
-using System.IO;
-using System.Linq;
-
 namespace AdventOfCode2021
 {
-	public class SonarSweep2
+    public class SonarSweep2
 	{
-		public static void Run(string path)
+		public static int Run(int[] depths)
 		{
-			var foundDepthStrings = File.ReadAllLines(path);
-			var foundDepths = foundDepthStrings.Select(x => int.Parse(x)).ToList();
-
-			int previousDepth = -1;
-			int numIncreasedMeasurements = 0;
-			for (int i = 1; i < foundDepths.Count() - 1; i++)
+			var numIncreasedMeasurements = 0;
+			for (var i = 2; i < depths.Length - 1; i++)
 			{
-				var depth = foundDepths[i-1] + foundDepths[i] + foundDepths[i+1];
-
-				if (previousDepth == -1)
-				{
-					Console.WriteLine($"{depth} (N/A - no previous measurement)");
-					previousDepth = depth;
-					continue;
-				}
-
-				if (depth > previousDepth)
-				{
-					Console.WriteLine($"{depth} (increased)");
+				if (GetWindow(i, depths) > GetWindow(i-1, depths))
+                {
 					numIncreasedMeasurements++;
-				}
-				else if (depth < previousDepth)
-				{
-					Console.WriteLine($"{depth} (decreased)");
-				}
-				else
-				{
-					Console.WriteLine($"{depth} (no change)");
-				}
-
-				previousDepth = depth;
+                }
 			}
 
-			Console.WriteLine(numIncreasedMeasurements);
+			return numIncreasedMeasurements;
 		}
+
+		private static int GetWindow(int index, int[] arr)
+        {
+			return arr[index - 1] + arr[index] + arr[index + 1];
+        }
 	}
 }
