@@ -1,8 +1,8 @@
-﻿using AdventOfCode2021;
+﻿using AdventOfCode2021.Day03;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
-namespace AdventOfCode2021Tests
+namespace AdventOfCode2021Tests.Day03
 {
     [TestClass]
     public class BinaryDiagnostic1Test : TestBase

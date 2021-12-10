@@ -1,9 +1,9 @@
-using AdventOfCode2021;
+using AdventOfCode2021.Day01;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode2021Tests
+namespace AdventOfCode2021Tests.Day01
 {
     [TestClass]
     public class SonarSweep1Test : TestBase

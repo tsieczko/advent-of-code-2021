@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AdventOfCode2021
+namespace AdventOfCode2021.Day03
 {
     public static class BinaryDiagnostic1
     {

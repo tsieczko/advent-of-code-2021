@@ -1,4 +1,4 @@
-namespace AdventOfCode2021
+namespace AdventOfCode2021.Day01
 {
     public class SonarSweep1
 	{

@@ -1,8 +1,8 @@
-﻿using AdventOfCode2021;
+﻿using AdventOfCode2021.Day02;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
-namespace AdventOfCode2021Tests
+namespace AdventOfCode2021Tests.Day02
 {
     [TestClass]
     public class Dive1Test : TestBase
