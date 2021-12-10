@@ -5,25 +5,25 @@ using System.IO;
 namespace AdventOfCode2021Tests
 {
     [TestClass]
-    public class Dive1Test
+    public class Dive1Test : TestBase
     {
-        public string TestFolder { get; } = @"..\..\..\Day02";
+        protected override string DayFolderName => "Day02";
 
         [TestMethod]
-        public void Dive1TestInput()
+        public override void TestInput()
         {
             // read in test input
-            var depths = File.ReadAllLines(Path.Combine(TestFolder, "test_input.txt"));
+            var depths = File.ReadAllLines(TestInputPath);
             var result = Dive1.Run(depths);
 
             Assert.AreEqual(150, result);
         }
 
         [TestMethod]
-        public void Dive1PuzzleInput()
+        public override void PuzzleInput()
         {
             // read in test input
-            var depths = File.ReadAllLines(Path.Combine(TestFolder, "puzzle_input.txt"));
+            var depths = File.ReadAllLines(PuzzleInputPath);
             var result = Dive1.Run(depths);
 
             Assert.AreEqual(1947824, result);

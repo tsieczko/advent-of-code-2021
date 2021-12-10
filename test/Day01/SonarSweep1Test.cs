@@ -6,25 +6,25 @@ using System.Linq;
 namespace AdventOfCode2021Tests
 {
     [TestClass]
-    public class SonarSweep1Test
+    public class SonarSweep1Test : TestBase
     {
-        public string TestFolder { get; } = @"..\..\..\Day01";
+        protected override string DayFolderName => "Day01";
 
         [TestMethod]
-        public void SonarSweep1TestInput()
+        public override void TestInput()
         {
             // read in test input
-            var depths = File.ReadAllLines(Path.Combine(TestFolder, "test_input.txt")).Select(x => int.Parse(x)).ToArray();
+            var depths = File.ReadAllLines(TestInputPath).Select(x => int.Parse(x)).ToArray();
             var result = SonarSweep1.Run(depths);
 
             Assert.AreEqual(7, result);
         }
 
         [TestMethod]
-        public void SonarSweep1PuzzleInput()
+        public override void PuzzleInput()
         {
             // read in test input
-            var depths = File.ReadAllLines(Path.Combine(TestFolder, "puzzle_input.txt")).Select(x => int.Parse(x)).ToArray();
+            var depths = File.ReadAllLines(PuzzleInputPath).Select(x => int.Parse(x)).ToArray();
             var result = SonarSweep1.Run(depths);
 
             Assert.AreEqual(1581, result);
