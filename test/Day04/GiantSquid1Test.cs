@@ -1,6 +1,5 @@
 ﻿using AdventOfCode2021.Day04;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.IO;
 
 namespace AdventOfCode2021Tests.Day04
@@ -16,7 +15,7 @@ namespace AdventOfCode2021Tests.Day04
             var lines = File.ReadAllLines(PuzzleInputPath);
             var result = GiantSquid1.Run(lines);
 
-            Assert.AreEqual(-1, result);
+            Assert.AreEqual(31424, result);
         }
 
         [TestMethod]
