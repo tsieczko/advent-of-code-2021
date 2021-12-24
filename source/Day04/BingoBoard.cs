@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2021.Day04
+﻿using System;
+
+namespace AdventOfCode2021.Day04
 {
     public class BingoBoard
     {
@@ -9,6 +11,24 @@
         {
             _size = size;
             _board = new BoardElement[size, size];
+        }
+
+        public override string ToString()
+        {
+            string result = string.Empty;
+
+            for (int row = 0; row < _size; row++)
+            {
+                for (int column = 0; column < _size; column++)
+                {
+                    var boardElement = _board[row, column];
+                    result += $"{(boardElement.IsVisited ? "*" : " ")}";
+                    result += $"{boardElement.Value:d2}";
+                    result += $"{(column == _size - 1 ? Environment.NewLine : " ")}";
+                }
+            }
+
+            return result;
         }
 
         public void SetBoard(int row, int column, int value)
