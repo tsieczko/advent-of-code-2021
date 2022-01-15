@@ -1,11 +1,20 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode2021.Day05
 {
-	public static class LineParser
+	public static class LineFactory
 	{
-		public static Line ConstructLineFromMatch(Match match) => ConstructLineFromMatch1(match);
+		public static Regex Regex = new(@"(\d+),(\d+) -> (\d+),(\d+)");
 
+		public static Line CreateLine(string line)
+		{
+			var match = Regex.Match(line);
+
+			return ConstructLineFromMatch1(match);
+		}
+
+		[LineConstructor]
 		public static Line ConstructLineFromMatch1(Match match)
 		{
 			var x1 = int.Parse(match.Groups[1].Value);
@@ -33,6 +42,7 @@ namespace AdventOfCode2021.Day05
 			return line;
 		}
 
+		[LineConstructor]
 		public static Line ConstructLineFromMatch2(Match match) => new Line()
 		{
 			Point1 = new Point()
@@ -47,7 +57,8 @@ namespace AdventOfCode2021.Day05
 			}
 		};
 
-		private static Line ConstructLineFromMatch3(Match match)
+		[LineConstructor]
+		public static Line ConstructLineFromMatch3(Match match)
 		{
 			var x1 = int.Parse(match.Groups[1].Value);
 			var y1 = int.Parse(match.Groups[2].Value);
@@ -62,7 +73,8 @@ namespace AdventOfCode2021.Day05
 			return line;
 		}
 
-		private static Line ConstructLineFromMatch4(Match match)
+		[LineConstructor]
+		public static Line ConstructLineFromMatch4(Match match)
 		{
 			var x1 = int.Parse(match.Groups[1].Value);
 			var y1 = int.Parse(match.Groups[2].Value);
@@ -72,7 +84,8 @@ namespace AdventOfCode2021.Day05
 			return new Line(new Point(x1, y1), new Point(x2, y2));
 		}
 
-		private static Line ConstructLineFromMatch5(Match match)
+		[LineConstructor]
+		public static Line ConstructLineFromMatch5(Match match)
 		{
 			return new Line(
 				new Point(
@@ -82,5 +95,11 @@ namespace AdventOfCode2021.Day05
 					int.Parse(match.Groups[3].Value),
 					int.Parse(match.Groups[4].Value)));
 		}
+	}
+
+	[AttributeUsage(AttributeTargets.Method)]
+	public class LineConstructorAttribute : Attribute
+	{
+
 	}
 }
