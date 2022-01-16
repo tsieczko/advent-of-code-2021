@@ -4,8 +4,12 @@
 	{
 		None,
 		North,
-		South,
+		Northeast,
 		East,
-		West
+		Southeast,
+		South,
+		Southwest,
+		West,
+		Northwest,
 	}
 }

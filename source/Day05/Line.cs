@@ -18,24 +18,45 @@
 
 		public Direction GetDirection()
 		{
-			if (Point1.X == Point2.X && Point1.Y > Point2.Y)
+			var startX = Point1.X;
+			var endX = Point2.X;
+			var startY = Point1.Y;
+			var endY = Point2.Y;
+
+			if (startX == endX) // vertical line
 			{
-				return Direction.North;
+				if (startY > endY) return Direction.North;
+				if (startY < endY) return Direction.South;
 			}
-			else if (Point1.X == Point2.X && Point1.Y < Point2.Y)
+			if (startY == endY) // horizontal line
 			{
-				return Direction.South;
+				if (startX < endX) return Direction.East;
+				if (startX > endX) return Direction.West;
 			}
-			else if (Point1.X < Point2.X && Point1.Y == Point2.Y)
+			if (startY > endY) // north
 			{
-				return Direction.East;
+				if (startX < endX) return Direction.Northeast;
+				if (startX > endX) return Direction.Northwest;
 			}
-			else if (Point1.X > Point2.X && Point1.Y == Point2.Y)
+			if (startY < endY) // south
 			{
-				return Direction.West;
+				if (startX < endX) return Direction.Southeast;
+				if (startX > endX) return Direction.Southwest;
 			}
 
 			return Direction.None;
+		}
+
+		public bool IsDiagonal()
+		{
+			return GetDirection() switch
+			{
+				Direction.Northeast => true,
+				Direction.Northwest => true,
+				Direction.Southeast => true,
+				Direction.Southwest => true,
+				_ => false
+			};
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day05
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = HydrothermalVenture2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(19939, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day05
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = HydrothermalVenture2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(12, result);
 		}
 	}
 }

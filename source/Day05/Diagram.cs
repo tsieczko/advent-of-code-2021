@@ -15,12 +15,14 @@ namespace AdventOfCode2021.Day05
 			_diagram = new int[_diagramSize, _diagramSize];
 		}
 
-		public Diagram AddLine(Line line)
+		public Diagram AddLine(Line line, bool allowDiagonal = false)
 		{
-			if (line.Point1.X == line.Point2.X || line.Point1.Y == line.Point2.Y)
+			if (!allowDiagonal && line.IsDiagonal())
 			{
-				_lines.Add(line);
+				return this;
 			}
+
+			_lines.Add(line);
 
 			return this;
 		}
@@ -65,8 +67,8 @@ namespace AdventOfCode2021.Day05
 					break;
 				}
 
-				current = MovePoint(current, line.GetDirection());
-			} 
+				current = GetNextPoint(current, line.GetDirection());
+			}
 		}
 
 		private void MarkPoint(Point point)
@@ -74,21 +76,40 @@ namespace AdventOfCode2021.Day05
 			_diagram[point.Y, point.X] += 1;
 		}
 
-		private static Point MovePoint(Point point, Direction direction)
+		private static Point GetNextPoint(Point point, Direction direction)
 		{
 			switch (direction)
 			{
 				case Direction.North:
-					point.Y -= 1;
+					point.Y--;
 					break;
-				case Direction.South:
-					point.Y += 1;
+				case Direction.Northeast:
+					point.Y--;
+					point.X++;
 					break;
 				case Direction.East:
-					point.X += 1;
+					point.X++;
+					break;
+				case Direction.Southeast:
+					point.Y++;
+					point.X++;
+					break;
+				case Direction.South:
+					point.Y++;
+					break;
+				case Direction.Southwest:
+					point.Y++;
+					point.X--;
 					break;
 				case Direction.West:
-					point.X -= 1;
+					point.X--;
+					break;
+				case Direction.Northwest:
+					point.Y--;
+					point.X--;
+					break;
+				case Direction.None:
+				default:
 					break;
 			}
 

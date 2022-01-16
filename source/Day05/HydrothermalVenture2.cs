@@ -4,7 +4,25 @@
 	{
 		public static int Run(string[] lines)
 		{
-			return -1;
+			var diagram = new Diagram(size: 1000);
+
+			foreach (var line in lines)
+			{
+				diagram.AddLine(LineFactory.CreateLine(line), allowDiagonal: true);
+			}
+
+			var points = diagram.Draw();
+			var numTwoLinesOverlap = 0;
+
+			foreach (var point in points)
+			{
+				if (point > 1)
+				{
+					numTwoLinesOverlap += 1;
+				}
+			}
+
+			return numTwoLinesOverlap;
 		}
 	}
 }
