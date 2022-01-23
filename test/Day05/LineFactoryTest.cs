@@ -1,9 +1,9 @@
-﻿using AdventOfCode2021.Day05;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using AdventOfCode2021.Day05;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2021Tests.Day05
 {

@@ -1,7 +1,7 @@
-using AdventOfCode2021.Day01;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
+using AdventOfCode2021.Day01;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2021Tests.Day01
 {

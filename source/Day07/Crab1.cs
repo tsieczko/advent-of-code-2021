@@ -15,7 +15,7 @@ namespace AdventOfCode2021.Day07
 			foreach (var currentPosition in Enumerable.Range(lowestPostion, highestPostion - lowestPostion))
 			{
 				var fuelCost = horizontalPositions.Select(x => Math.Abs(x - currentPosition)).Sum();
-				
+
 				minFuel = fuelCost < minFuel ? fuelCost : minFuel;
 			}
 
