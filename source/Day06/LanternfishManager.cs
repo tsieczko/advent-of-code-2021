@@ -43,15 +43,17 @@ namespace AdventOfCode2021.Day06
 				}
 			}
 
-			var newestLanternfish = _lanternfish.Find(x => x.Timer == newLanternfishTimer);
+			var timer6Lanterfish = _lanternfish.FindAll(lanternfish => lanternfish.Timer == 6);
 
-			if (newestLanternfish is null)
+			if (timer6Lanterfish.Count() == 2)
+			{
+				timer6Lanterfish[0].Count += timer6Lanterfish[1].Count;
+				_lanternfish.Remove(timer6Lanterfish[1]);
+			}
+
+			if (newLanternfishCount > 0)
 			{
 				_lanternfish.Add(new Lanternfish(newLanternfishTimer, newLanternfishCount));
-			}
-			else
-			{
-				newestLanternfish.Count += newLanternfishCount;
 			}
 		}
 	}
