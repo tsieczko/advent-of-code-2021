@@ -1,16 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day07
 {
 	public static class Crab1
 	{
-		public static long Run(string[] lines)
+		public static int Run(string[] lines)
 		{
-			return -1;
+			var horizontalPositions = lines[0].Split(',').Select(x => int.Parse(x));
+			var lowestPostion = horizontalPositions.Min();
+			var highestPostion = horizontalPositions.Max();
+			var minFuel = int.MaxValue;
+
+			foreach (var currentPosition in Enumerable.Range(lowestPostion, highestPostion - lowestPostion))
+			{
+				var fuelCost = horizontalPositions.Select(x => Math.Abs(x - currentPosition)).Sum();
+				
+				minFuel = fuelCost < minFuel ? fuelCost : minFuel;
+			}
+
+			return minFuel;
 		}
 	}
 }
