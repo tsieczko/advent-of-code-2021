@@ -2,25 +2,26 @@
 {
 	public class Lanternfish
 	{
-		private int _timer;
-
-		public Lanternfish(int timer)
+		public Lanternfish(int timer, long count)
 		{
-			_timer = timer;
+			Timer = timer;
+			Count = count;
 		}
 
-		public int Timer => _timer;
+		public int Timer { get; private set; } = 0;
 
-		public bool DidReset { get; set; } = false;
+		public bool DidReset { get; private set; } = false;
+
+		public long Count { get; set; } = 1;
 
 		public void AdvanceDay()
 		{
-			_timer--;
+			Timer--;
 
-			if (_timer < 0)
+			if (Timer < 0)
 			{
 				DidReset = true;
-				_timer = 6;
+				Timer = 6;
 			}
 			else
 			{

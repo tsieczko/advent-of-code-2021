@@ -7,14 +7,18 @@ namespace AdventOfCode2021.Day06
 	{
 		private const int newLanternfishTimer = 8;
 
-		private List<Lanternfish> _lanternfish = new();
+		private readonly List<Lanternfish> _lanternfish = new();
 
 		public LanternfishManager(IEnumerable<int> startingLanternfishTimers)
 		{
-			_lanternfish.AddRange(startingLanternfishTimers.Select(fishTimer => new Lanternfish(fishTimer)));
+			var groupedLanternfishTimers = startingLanternfishTimers
+				.GroupBy(x => x)
+				.Select(x => (timer: x.Key, timerCount: x.Count()));
+
+			_lanternfish.AddRange(groupedLanternfishTimers.Select(x => new Lanternfish(x.timer, x.timerCount)));
 		}
 
-		public int TotalLanternfish => _lanternfish.Count;
+		public long TotalLanternfish => _lanternfish.Aggregate((long)0, (acc, lanternfish) => acc + lanternfish.Count);
 
 		public void AdvanceDays(int days)
 		{
@@ -27,7 +31,7 @@ namespace AdventOfCode2021.Day06
 
 		public void AdvanceDay()
 		{
-			var newLanternfish = new List<Lanternfish>();
+			long newLanternfishCount = 0;
 
 			foreach (var lanternFish in _lanternfish)
 			{
@@ -35,11 +39,20 @@ namespace AdventOfCode2021.Day06
 
 				if (lanternFish.DidReset)
 				{
-					newLanternfish.Add(new Lanternfish(newLanternfishTimer));
+					newLanternfishCount += lanternFish.Count;
 				}
 			}
 
-			_lanternfish.AddRange(newLanternfish);
+			var newestLanternfish = _lanternfish.Find(x => x.Timer == newLanternfishTimer);
+
+			if (newestLanternfish is null)
+			{
+				_lanternfish.Add(new Lanternfish(newLanternfishTimer, newLanternfishCount));
+			}
+			else
+			{
+				newestLanternfish.Count += newLanternfishCount;
+			}
 		}
 	}
 }

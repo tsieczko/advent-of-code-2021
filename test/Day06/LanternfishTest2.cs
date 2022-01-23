@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day06
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = Lanternfish2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(1589590444365, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day06
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = Lanternfish2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(26984457539, result);
 		}
 	}
 }
