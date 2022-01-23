@@ -10,7 +10,7 @@ namespace AdventOfCode2021Tests.Day05
 	[TestClass]
 	public class LineFactoryTest
 	{
-		private string[] TestStrings = new string[]
+		private readonly string[] TestStrings = new string[]
 		{
 			"1,2 -> 3,4",
 			"11,22 -> 33,44",
@@ -18,7 +18,7 @@ namespace AdventOfCode2021Tests.Day05
 			"1111,2222 -> 3333,4444"
 		};
 
-		private Line[] ExpectedLines = new Line[]
+		private readonly Line[] ExpectedLines = new Line[]
 		{
 			new Line(new Point(1,2), new Point(3,4)),
 			new Line(new Point(11,22), new Point(33,44)),

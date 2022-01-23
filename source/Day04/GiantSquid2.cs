@@ -72,11 +72,11 @@ namespace AdventOfCode2021.Day04
 		{
 			var result = new BingoBoard(size: boardStrings.Length);
 
-			for (int row = 0; row < boardStrings.Length; row++)
+			for (var row = 0; row < boardStrings.Length; row++)
 			{
 				var rowStrings = boardStrings[row].Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-				for (int column = 0; column < rowStrings.Length; column++)
+				for (var column = 0; column < rowStrings.Length; column++)
 				{
 					var parsedNumber = int.Parse(rowStrings[column]);
 					result.SetBoard(row: row, column: column, value: parsedNumber);

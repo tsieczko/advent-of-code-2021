@@ -5,7 +5,7 @@ namespace AdventOfCode2021.Day05
 {
 	public static class LineFactory
 	{
-		public static Regex Regex = new(@"(\d+),(\d+) -> (\d+),(\d+)");
+		public static Regex Regex { get; } = new(@"(\d+),(\d+) -> (\d+),(\d+)");
 
 		public static Line CreateLine(string line)
 		{

@@ -4,8 +4,8 @@ namespace AdventOfCode2021.Day04
 {
 	public class BingoBoard
 	{
-		private int _size;
-		private BoardElement[,] _board;
+		private readonly int _size;
+		private readonly BoardElement[,] _board;
 
 		public BingoBoard(int size)
 		{
@@ -15,11 +15,11 @@ namespace AdventOfCode2021.Day04
 
 		public override string ToString()
 		{
-			string result = string.Empty;
+			var result = string.Empty;
 
-			for (int row = 0; row < _size; row++)
+			for (var row = 0; row < _size; row++)
 			{
-				for (int column = 0; column < _size; column++)
+				for (var column = 0; column < _size; column++)
 				{
 					var boardElement = _board[row, column];
 					result += $"{(boardElement.IsVisited ? "*" : " ")}";
@@ -58,12 +58,12 @@ namespace AdventOfCode2021.Day04
 
 		public bool IsBingo()
 		{
-			for (int y = 0; y < _size; y++)
+			for (var y = 0; y < _size; y++)
 			{
 				var isRowBingo = true;
 				var isColBingo = true;
 
-				for (int x = 0; x < _size; x++)
+				for (var x = 0; x < _size; x++)
 				{
 					if (!_board[y, x].IsVisited)
 					{
@@ -91,7 +91,7 @@ namespace AdventOfCode2021.Day04
 
 		public int GetSumOfUnmarkedNumbers()
 		{
-			int result = 0;
+			var result = 0;
 
 			foreach (var boardElement in _board)
 			{
@@ -105,7 +105,7 @@ namespace AdventOfCode2021.Day04
 		}
 	}
 
-	class BoardElement
+	public class BoardElement
 	{
 		public bool IsVisited { get; set; }
 		public int Value { get; set; }

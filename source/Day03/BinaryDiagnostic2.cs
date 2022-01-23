@@ -65,9 +65,9 @@ namespace AdventOfCode2021.Day03
 
 		private static int ToInt(this string bitString)
 		{
-			int result = 0;
+			var result = 0;
 
-			for (int i = 0; i < bitString.Length; i++)
+			for (var i = 0; i < bitString.Length; i++)
 			{
 				var currentBit = bitString[i] == '1' ? 1 : 0;
 				var currentIndex = bitString.Length - 1 - i;

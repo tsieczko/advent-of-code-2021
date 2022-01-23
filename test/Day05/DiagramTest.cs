@@ -6,7 +6,7 @@ namespace AdventOfCode2021Tests.Day05
 	[TestClass]
 	public class DiagramTest
 	{
-		Diagram Diagram { get; set; }
+		public Diagram Diagram { get; set; }
 
 		[TestInitialize]
 		public void TestInitialize()

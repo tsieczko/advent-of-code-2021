@@ -16,7 +16,7 @@ csharp_new_line_before_else = true
 #require members of object intializers to be on separate lines
 csharp_new_line_before_members_in_object_initializers = true
 #require braces to be on a new line for types, properties, object_collection_array_initializers, methods, and control_blocks (also known as "Allman" style)
-csharp_new_line_before_open_brace =all
+csharp_new_line_before_open_brace = all
 
 #Formatting - organize using options
 
@@ -50,7 +50,7 @@ csharp_preserve_single_line_blocks = true
 #Style - Code block preferences
 
 #prefer curly braces even for one line of code
-csharp_prefer_braces = true:suggestion
+csharp_prefer_braces =true:silent
 
 #Style - expression bodied member options
 
@@ -107,7 +107,7 @@ dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion
 insert_final_newline=true
 csharp_space_before_semicolon_in_for_statement=false
-csharp_style_expression_bodied_constructors=true:silent
+csharp_style_expression_bodied_constructors=true:suggestion
 csharp_style_expression_bodied_operators=true:silent
 csharp_style_expression_bodied_local_functions=true:silent
 csharp_style_unused_value_expression_statement_preference=discard_variable:silent
@@ -115,11 +115,12 @@ csharp_style_allow_embedded_statements_on_same_line_experimental=false:silent
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental=false:silent
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental=false:silent
 csharp_style_prefer_pattern_matching=true:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = false
 
 [*.{cs,vb}]
 dotnet_style_prefer_auto_properties=true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment=true:suggestion
-dotnet_style_prefer_conditional_expression_over_return=true:suggestion
+dotnet_style_prefer_conditional_expression_over_return=true:silent
 dotnet_style_allow_multiple_blank_lines_experimental=false:silent
 dotnet_style_allow_statement_immediately_after_block_experimental=false:silent
 dotnet_style_parentheses_in_other_operators=always_for_clarity:silent

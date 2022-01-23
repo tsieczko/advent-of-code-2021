@@ -45,7 +45,7 @@ namespace AdventOfCode2021.Day06
 
 			var timer6Lanterfish = _lanternfish.FindAll(lanternfish => lanternfish.Timer == 6);
 
-			if (timer6Lanterfish.Count() == 2)
+			if (timer6Lanterfish.Count == 2)
 			{
 				timer6Lanterfish[0].Count += timer6Lanterfish[1].Count;
 				_lanternfish.Remove(timer6Lanterfish[1]);
