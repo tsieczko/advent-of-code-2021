@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode2021.Day08
 {
@@ -8,6 +6,8 @@ namespace AdventOfCode2021.Day08
 	{
 		public static int Run(string[] lines)
 		{
+			var result = 0;
+
 			foreach (var line in lines)
 			{
 				var stringSplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
@@ -15,24 +15,17 @@ namespace AdventOfCode2021.Day08
 				var signalPatternStrings = delimited[0].Split(' ', stringSplitOptions);
 				var outputPatternStrings = delimited[1].Split(' ', stringSplitOptions);
 
-				var signalPatterns = signalPatternStrings.Select(patternString => new SignalPattern(patternString));
-				var outputPatterns = outputPatternStrings.Select(patternString => new SignalPattern(patternString));
-
-				var segmentToCount = new Dictionary<char, int>()
+				foreach (var outputPatternString in outputPatternStrings)
 				{
-					{ 'a', 8 },
-					{ 'b', 6 },
-					{ 'c', 8 },
-					{ 'd', 7 },
-					{ 'e', 4 },
-					{ 'f', 9 },
-					{ 'g', 7 }
-				};
-
-				signalPatternStrings.GroupBy(x => x);
+					result += outputPatternString.Length switch
+					{
+						2 or 3 or 4 or 7 => 1,
+						_ => 0,
+					};
+				}
 			}
 
-			return -1;
+			return result;
 		}
 	}
 }
