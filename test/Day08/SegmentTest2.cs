@@ -7,7 +7,7 @@ namespace AdventOfCode2021Tests.Day08
 	[TestClass]
 	public class SeqmentTest2 : TestBase
 	{
-		protected override string DayFolderName => "Day07";
+		protected override string DayFolderName => "Day08";
 
 		[TestMethod]
 		public override void PuzzleInput()
