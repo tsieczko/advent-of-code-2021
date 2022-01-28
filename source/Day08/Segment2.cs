@@ -27,22 +27,43 @@ namespace AdventOfCode2021.Day08
 				var digitToSignalPattern = signalPatternToDigit.Where(x => x.Value != null).ToDictionary(x => x.Value, x => x.Key);
 				var outputPatternToDigit = MapKnownDigits(outputPatternStrings);
 
-				var decodedMapping = new Dictionary<char, char>();
+				var decodedToEncoded = new Dictionary<char, char>();
 
 				// a is the segments for seven minus the seqments for one
-				decodedMapping['a'] = digitToSignalPattern[7].Except(digitToSignalPattern[1]).Single();
+				decodedToEncoded['a'] = digitToSignalPattern[7].Except(digitToSignalPattern[1]).Single();
 				// b is the segment that occurs 6 times
-				decodedMapping['b'] = segmentFrequency.Where(x => x.Value == 6).Single().Key;
+				decodedToEncoded['b'] = segmentFrequency.Where(x => x.Value == 6).Single().Key;
 				// c is the segment that occurs 8 times and is one of the segments for one
-				decodedMapping['c'] = segmentFrequency.Where(x => x.Value == 8).Where(x => digitToSignalPattern[1].Contains(x.Key)).Single().Key;
+				decodedToEncoded['c'] = segmentFrequency.Where(x => x.Value == 8).Where(x => digitToSignalPattern[1].Contains(x.Key)).Single().Key;
 				// d is the segment that occurs 7 times and is one of the segments for four
-				decodedMapping['d'] = segmentFrequency.Where(x => x.Value == 7).Where(x => digitToSignalPattern[4].Contains(x.Key)).Single().Key;
+				decodedToEncoded['d'] = segmentFrequency.Where(x => x.Value == 7).Where(x => digitToSignalPattern[4].Contains(x.Key)).Single().Key;
 				// e is the segment that occurs 4 times
-				decodedMapping['e'] = segmentFrequency.Where(x => x.Value == 4).Single().Key;
+				decodedToEncoded['e'] = segmentFrequency.Where(x => x.Value == 4).Single().Key;
 				// f is the segment that occurs 9 times
-				decodedMapping['f'] = segmentFrequency.Where(x => x.Value == 9).Single().Key;
+				decodedToEncoded['f'] = segmentFrequency.Where(x => x.Value == 9).Single().Key;
 				// g is the segment that occurs 7 times and is NOT one of the segments for four
-				decodedMapping['g'] = segmentFrequency.Where(x => x.Value == 7).Where(x => !digitToSignalPattern[4].Contains(x.Key)).Single().Key;
+				decodedToEncoded['g'] = segmentFrequency.Where(x => x.Value == 7).Where(x => !digitToSignalPattern[4].Contains(x.Key)).Single().Key;
+
+				var encodedToDecoded = decodedToEncoded.ToDictionary(x => x.Value, x => x.Key);
+
+				var decodedOutputPatternStrings = outputPatternStrings.Select(str =>
+				{
+					var charArray = str.ToCharArray();
+					for (var i = 0; i < charArray.Length; i++)
+					{
+						charArray[i] = encodedToDecoded[charArray[i]];
+					}
+					return new string(charArray);
+				}).ToArray();
+
+				var number1 = new Pattern(decodedOutputPatternStrings[0]).GetNumber();
+				var number2 = new Pattern(decodedOutputPatternStrings[1]).GetNumber();
+				var number3 = new Pattern(decodedOutputPatternStrings[2]).GetNumber();
+				var number4 = new Pattern(decodedOutputPatternStrings[3]).GetNumber();
+
+				var decodedEntry = (number1 * 1000) + (number2 * 100) + (number3 * 10) + (number4 * 1);
+
+				result += decodedEntry;
 			}
 
 			return result;

@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day08
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = Segment2.Run(lines);
 
-			Assert.AreEqual(93699985, result);
+			Assert.AreEqual(1010460, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day08
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = Segment2.Run(lines);
 
-			Assert.AreEqual(168, result);
+			Assert.AreEqual(61229, result);
 		}
 	}
 }

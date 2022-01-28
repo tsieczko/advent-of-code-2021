@@ -26,7 +26,7 @@ namespace AdventOfCode2021.Day08
 		F = 1 << 6,
 		G = 1 << 7,
 
-		/*Zero = A | B | C | E | F | G,
+		Zero = A | B | C | E | F | G,
 		One = C | F,
 		Two = A | C | D | E | G,
 		Three = A | C | D | F | G,
@@ -35,7 +35,7 @@ namespace AdventOfCode2021.Day08
 		Six = A | B | D | E | F | G,
 		Seven = A | C | F,
 		Eight = A | B | C | D | E | F | G,
-		Nine = A | B | C | D | F | G,*/
+		Nine = A | B | C | D | F | G,
 	}
 	public static class SegmentFrequencey
 	{
@@ -68,6 +68,24 @@ namespace AdventOfCode2021.Day08
 					_ => Segments.None
 				};
 			}
+		}
+
+		public int GetNumber()
+		{
+			return Segments switch
+			{
+				Segments.Zero => 0,
+				Segments.One => 1,
+				Segments.Two => 2,
+				Segments.Three => 3,
+				Segments.Four => 4,
+				Segments.Five => 5,
+				Segments.Six => 6,
+				Segments.Seven => 7,
+				Segments.Eight => 8,
+				Segments.Nine => 9,
+				_ => -1
+			};
 		}
 	}
 }
