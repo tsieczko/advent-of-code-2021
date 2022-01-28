@@ -14,52 +14,25 @@ namespace AdventOfCode2021.Day08
 			{
 				var stringSplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
 				var delimited = line.Split('|', stringSplitOptions);
-				var signalPatternStrings = delimited[0].Split(' ', stringSplitOptions).Select(str => str.Sort());
-				var outputPatternStrings = delimited[1].Split(' ', stringSplitOptions).Select(str => str.Sort());
+				var signalPatternStrings = delimited[0].Split(' ', stringSplitOptions);
+				var outputPatternStrings = delimited[1].Split(' ', stringSplitOptions);
 
-				var segmentFrequency = signalPatternStrings
-					.SelectMany(str => str)
-					.GroupBy(chr => chr, (chr, group) => (chr, group.Count()))
-					.ToDictionary(tup => tup.Item1, tup => tup.Item2);
+				// compute frequency of segments
+				var characterFrequency = ComputeCharacterFrequencey(signalPatternStrings);
 
 				// find the known patterns and map them to their digits
-				var signalPatternToDigit = MapKnownDigits(signalPatternStrings);
-				var digitToSignalPattern = signalPatternToDigit.Where(x => x.Value != null).ToDictionary(x => x.Value, x => x.Key);
-				var outputPatternToDigit = MapKnownDigits(outputPatternStrings);
+				var digitToSignalPattern = MapKnownDigits(signalPatternStrings);
 
-				var decodedToEncoded = new Dictionary<char, char>();
+				// deduce which mixed segments map to correct segments
+				var encodedToDecoded = MapEncodedToDecodedSegment(characterFrequency, digitToSignalPattern);
 
-				// a is the segments for seven minus the seqments for one
-				decodedToEncoded['a'] = digitToSignalPattern[7].Except(digitToSignalPattern[1]).Single();
-				// b is the segment that occurs 6 times
-				decodedToEncoded['b'] = segmentFrequency.Where(x => x.Value == 6).Single().Key;
-				// c is the segment that occurs 8 times and is one of the segments for one
-				decodedToEncoded['c'] = segmentFrequency.Where(x => x.Value == 8).Where(x => digitToSignalPattern[1].Contains(x.Key)).Single().Key;
-				// d is the segment that occurs 7 times and is one of the segments for four
-				decodedToEncoded['d'] = segmentFrequency.Where(x => x.Value == 7).Where(x => digitToSignalPattern[4].Contains(x.Key)).Single().Key;
-				// e is the segment that occurs 4 times
-				decodedToEncoded['e'] = segmentFrequency.Where(x => x.Value == 4).Single().Key;
-				// f is the segment that occurs 9 times
-				decodedToEncoded['f'] = segmentFrequency.Where(x => x.Value == 9).Single().Key;
-				// g is the segment that occurs 7 times and is NOT one of the segments for four
-				decodedToEncoded['g'] = segmentFrequency.Where(x => x.Value == 7).Where(x => !digitToSignalPattern[4].Contains(x.Key)).Single().Key;
+				// decode the output pattern strings using the mapping
+				var decodedOutputPatternStrings = DecodePatternStrings(outputPatternStrings, encodedToDecoded);
 
-				var encodedToDecoded = decodedToEncoded.ToDictionary(x => x.Value, x => x.Key);
-
-				var decodedOutputPatternStrings = outputPatternStrings.Select(str =>
-				{
-					var charArray = str.ToCharArray();
-					for (var i = 0; i < charArray.Length; i++)
-					{
-						charArray[i] = encodedToDecoded[charArray[i]];
-					}
-					return new string(charArray);
-				}).ToArray();
-
-				var number1 = new Pattern(decodedOutputPatternStrings[0]).GetNumber();
-				var number2 = new Pattern(decodedOutputPatternStrings[1]).GetNumber();
-				var number3 = new Pattern(decodedOutputPatternStrings[2]).GetNumber();
-				var number4 = new Pattern(decodedOutputPatternStrings[3]).GetNumber();
+				var number1 = PatternDecoder.Decode(decodedOutputPatternStrings[0]);
+				var number2 = PatternDecoder.Decode(decodedOutputPatternStrings[1]);
+				var number3 = PatternDecoder.Decode(decodedOutputPatternStrings[2]);
+				var number4 = PatternDecoder.Decode(decodedOutputPatternStrings[3]);
 
 				var decodedEntry = (number1 * 1000) + (number2 * 100) + (number3 * 10) + (number4 * 1);
 
@@ -69,31 +42,66 @@ namespace AdventOfCode2021.Day08
 			return result;
 		}
 
-		public static string Sort(this string str)
+		private static string[] DecodePatternStrings(string[] outputPatternStrings, IDictionary<char, char> encodedToDecoded)
 		{
-			var charArray = str.ToCharArray();
-			Array.Sort(charArray);
-
-			return new string(charArray);
+			return outputPatternStrings.Select(x => x.DecodeStringWithMapping(encodedToDecoded)).ToArray();
 		}
 
-		public static IDictionary<string, int?> MapKnownDigits(IEnumerable<string> patternStrings)
+		private static string DecodeStringWithMapping(this string str, IDictionary<char, char> encodedToDecoded)
 		{
-			var result = new Dictionary<string, int?>();
+			return new string(str.Select(chr => encodedToDecoded[chr]).ToArray());
+		}
 
-			foreach (var patternString in patternStrings)
+		private static IDictionary<char, char> MapEncodedToDecodedSegment(IDictionary<char, int> characterFrequency, IDictionary<int, string> digitToSignalPattern)
+		{
+			var decodedToEncoded = new Dictionary<char, char>
 			{
-				result[patternString] = patternString.Length switch
+				// a is the segments for seven minus the seqments for one
+				['a'] = digitToSignalPattern[7].Except(digitToSignalPattern[1]).Single(),
+				// b is the segment that occurs 6 times
+				['b'] = characterFrequency.Where(x => x.Value == 6).Single().Key,
+				// c is the segment that occurs 8 times and is one of the segments for one
+				['c'] = characterFrequency.Where(x => x.Value == 8).Where(x => digitToSignalPattern[1].Contains(x.Key)).Single().Key,
+				// d is the segment that occurs 7 times and is one of the segments for four
+				['d'] = characterFrequency.Where(x => x.Value == 7).Where(x => digitToSignalPattern[4].Contains(x.Key)).Single().Key,
+				// e is the segment that occurs 4 times
+				['e'] = characterFrequency.Where(x => x.Value == 4).Single().Key,
+				// f is the segment that occurs 9 times
+				['f'] = characterFrequency.Where(x => x.Value == 9).Single().Key,
+				// g is the segment that occurs 7 times and is NOT one of the segments for four
+				['g'] = characterFrequency.Where(x => x.Value == 7).Where(x => !digitToSignalPattern[4].Contains(x.Key)).Single().Key
+			};
+
+			return decodedToEncoded.ToDictionary(x => x.Value, x => x.Key);
+		}
+
+		private static Dictionary<int, string> MapKnownDigits(IEnumerable<string> signalPatternStrings)
+		{
+			var result = new Dictionary<int, string>();
+
+			foreach (var signalPatternString in signalPatternStrings)
+			{
+				var knownDigit = signalPatternString.Length switch
 				{
 					2 => 1,
 					3 => 7,
 					4 => 4,
 					7 => 8,
-					_ => null
+					_ => -1 // unknown
 				};
+
+				if (knownDigit is not -1)
+				{
+					result.Add(knownDigit, signalPatternString);
+				}
 			}
 
 			return result;
 		}
+
+		private static IDictionary<char, int> ComputeCharacterFrequencey(IEnumerable<string> signalPatternStrings) => signalPatternStrings
+			.SelectMany(selector: str => str)
+			.GroupBy(keySelector: chr => chr, resultSelector: (chr, group) => (chr, count: group.Count()))
+			.ToDictionary(keySelector: tup => tup.chr, elementSelector: tup => tup.count);
 	}
 }

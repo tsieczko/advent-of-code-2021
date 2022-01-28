@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Day08
 {
-
 	//  aaaa
 	// b    c
 	// b    c
@@ -37,26 +32,16 @@ namespace AdventOfCode2021.Day08
 		Eight = A | B | C | D | E | F | G,
 		Nine = A | B | C | D | F | G,
 	}
-	public static class SegmentFrequencey
-	{
-		public static int A = 8;
-		public static int B = 6;
-		public static int C = 8;
-		public static int D = 7;
-		public static int E = 4;
-		public static int F = 9;
-		public static int G = 7;
-	}
 
-	public class Pattern
+	public static class PatternDecoder
 	{
-		public Segments Segments;
-
-		public Pattern(string patternString)
+		public static int Decode(string patternString)
 		{
+			var segments = Segments.None;
+
 			foreach (var letter in patternString)
 			{
-				Segments |= letter switch
+				segments |= letter switch
 				{
 					'a' => Segments.A,
 					'b' => Segments.B,
@@ -68,11 +53,8 @@ namespace AdventOfCode2021.Day08
 					_ => Segments.None
 				};
 			}
-		}
 
-		public int GetNumber()
-		{
-			return Segments switch
+			return segments switch
 			{
 				Segments.Zero => 0,
 				Segments.One => 1,
