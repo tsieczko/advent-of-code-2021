@@ -82,6 +82,5 @@ namespace AdventOfCode2021.Day09
 
 			return neighbors;
 		}
-
 	}
 }
