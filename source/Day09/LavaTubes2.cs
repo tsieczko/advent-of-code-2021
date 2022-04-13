@@ -22,31 +22,34 @@ namespace AdventOfCode2021.Day09
 				}
 			}
 
-			var lowPoints = FindAllLowPoints(heightMapArray);
+			var heightMap = new HeightMap(heightMapArray);
+
+			var lowPoints = FindAllLowPoints(heightMap);
 
 			return lowPoints.Sum() + lowPoints.Count;
 		}
 
-		public static IList<int> FindAllLowPoints(int[,] heightMapArray)
+		public static IList<int> FindAllLowPoints(HeightMap heightMap)
 		{
 			var result = new List<int>();
 
-			for (var row = 0; row < heightMapArray.GetLength(0); row++)
+			for (heightMap.Row = 0; heightMap.Row < heightMap.MaxRowIndex; heightMap.Row++)
 			{
-				for (var col = 0; col < heightMapArray.GetLength(1); col++)
+				for (heightMap.Col = 0; heightMap.Col < heightMap.MaxColIndex; heightMap.Col++)
 				{
-					var currentPoint = heightMapArray[row, col];
-
-					var neighbors = GetNeighbors(heightMapArray, row, col);
-
-					if (neighbors.All(neighbor => neighbor > currentPoint))
+					if (heightMap.IsLowPoint())
 					{
-						result.Add(currentPoint);
+						heightMap.
 					}
 				}
 			}
 
 			return result;
+		}
+
+		public static int FindBasinSize(int[,] heightMapArray, int row, int col, int currentPoint)
+		{
+			return 0;
 		}
 
 		public static IList<int> GetNeighbors(int[,] heightMapArray, int row, int col)
