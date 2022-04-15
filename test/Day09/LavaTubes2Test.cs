@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day09
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = LavaTubes2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(1397760, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day09
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = LavaTubes2.Run(lines);
 
-			Assert.AreEqual(0, result);
+			Assert.AreEqual(1134, result);
 		}
 	}
 }

@@ -12,9 +12,9 @@
 		}
 
 		public int Row { get; set; } = 0;
-		
+
 		public int Col { get; set; } = 0;
-		
+
 		public int MaxRowIndex { get; }
 
 		public int MaxColIndex { get; }
@@ -34,35 +34,13 @@
 			get => _heightMapArray[Row, Col];
 		}
 
-		public bool IsLowPoint()
-		{
-			if (TryGetLeft(out var left) && CurrentPoint > left)
-			{
-				return false;
-			}
-			if (TryGetRight(out var right) && CurrentPoint > right)
-			{
-				return false;
-			}
-			if (TryGetDown(out var down) && CurrentPoint > down)
-			{
-				return false;
-			}
-			if (TryGetUp(out var up) && CurrentPoint > up)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
 		#region get neighbors
 
-		public bool TryGetLeft(out int result)
+		public bool TryGetLeft(out (int Row, int Col, int Height) result)
 		{
 			if (Col - 1 >= 0)
 			{
-				result = _heightMapArray[Row, Col - 1];
+				result = (Row, Col - 1, _heightMapArray[Row, Col - 1]);
 				return true;
 			}
 
@@ -70,22 +48,23 @@
 			return false;
 		}
 
-		public bool TryGetRight(out int result)
+		public bool TryGetRight(out (int Row, int Col, int Height) result)
 		{
 			if (Col + 1 <= MaxColIndex)
 			{
-				result = _heightMapArray[Row, Col + 1];
+				result = (Row, Col + 1, _heightMapArray[Row, Col + 1]);
 				return true;
 			}
 
 			result = default;
 			return false;
 		}
-		public bool TryGetDown(out int result)
+
+		public bool TryGetDown(out (int Row, int Col, int Height) result)
 		{
 			if (Row + 1 <= MaxRowIndex)
 			{
-				result = _heightMapArray[Row + 1, Col];
+				result = (Row + 1, Col, _heightMapArray[Row + 1, Col]);
 				return true;
 			}
 
@@ -93,11 +72,11 @@
 			return false;
 		}
 
-		public bool TryGetUp(out int result)
+		public bool TryGetUp(out (int Row, int Col, int Height) result)
 		{
 			if (Row - 1 >= 0)
 			{
-				result = _heightMapArray[Row - 1, Col];
+				result = (Row - 1, Col, _heightMapArray[Row - 1, Col]);
 				return true;
 			}
 
@@ -115,7 +94,7 @@
 			Col = 0;
 		}
 
-		public bool MoveLeft()
+		public bool TryMoveLeft()
 		{
 			if (Col > 0)
 			{
@@ -126,7 +105,7 @@
 			return false;
 		}
 
-		public bool MoveRight()
+		public bool TryMoveRight()
 		{
 			if (Col < MaxColIndex)
 			{
@@ -137,7 +116,7 @@
 			return false;
 		}
 
-		public bool MoveDown()
+		public bool TryMoveDown()
 		{
 			if (Row < MaxRowIndex)
 			{
@@ -148,7 +127,7 @@
 			return false;
 		}
 
-		public bool MoveUp()
+		public bool TryMoveUp()
 		{
 			if (Row > 0)
 			{
@@ -160,5 +139,27 @@
 		}
 
 		#endregion
+
+		public bool IsLowPoint()
+		{
+			if (TryGetLeft(out var left) && CurrentPoint > left.Height)
+			{
+				return false;
+			}
+			if (TryGetRight(out var right) && CurrentPoint > right.Height)
+			{
+				return false;
+			}
+			if (TryGetDown(out var down) && CurrentPoint > down.Height)
+			{
+				return false;
+			}
+			if (TryGetUp(out var up) && CurrentPoint > up.Height)
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 }
