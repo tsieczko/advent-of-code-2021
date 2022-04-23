@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day10
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = SyntaxScoring1.Run(lines);
 
-			Assert.AreEqual(462, result);
+			Assert.AreEqual(167379, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,24 @@ namespace AdventOfCode2021Tests.Day10
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = SyntaxScoring1.Run(lines);
 
-			Assert.AreEqual(15, result);
+			Assert.AreEqual(26397, result);
+		}
+
+		[DataRow("([])", default)]
+		[DataRow("(]", ']')]
+		[DataRow("{()()()>", '>')]
+		[DataRow("(((()))}", '}')]
+		[DataRow("<([]){()}[{}])", ')')]
+		[DataRow("{([(<{}[<>[]}>{[]{[(<()>", '}')]
+		[DataRow("[[<[([]))<([[{}[[()]]]", ')')]
+		[DataRow("[{[{({}]{}}([{[{{{}}([]", ']')]
+		[DataRow("[<(<(<(<{}))><([]([]()", ')')]
+		[DataRow("<{([([[(<>()){}]>(<<{{", '>')]
+		[DataTestMethod]
+		public void TestFindFirstIllegalCharacter(string input, char expected)
+		{
+			var result = SyntaxScoring1.FindFirstIllegalCharacter(input);
+			Assert.AreEqual(expected, result);
 		}
 	}
 }
