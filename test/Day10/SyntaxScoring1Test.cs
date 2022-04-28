@@ -40,7 +40,7 @@ namespace AdventOfCode2021Tests.Day10
 		[DataTestMethod]
 		public void TestFindFirstIllegalCharacter(string input, char expected)
 		{
-			var result = SyntaxScoring1.FindFirstIllegalCharacter(input);
+			var result = SyntaxScorer.FindFirstIllegalCharacter(input);
 			Assert.AreEqual(expected, result);
 		}
 	}

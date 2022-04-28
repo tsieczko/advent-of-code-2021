@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day10
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = SyntaxScoring2.Run(lines);
 
-			Assert.AreEqual(1397760, result);
+			Assert.AreEqual(2776842859, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,24 @@ namespace AdventOfCode2021Tests.Day10
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = SyntaxScoring2.Run(lines);
 
-			Assert.AreEqual(1134, result);
+			Assert.AreEqual(288957, result);
+		}
+
+		[DataRow("(", ")")]
+		[DataRow("((", "))")]
+		[DataRow("([", "])")]
+		[DataRow("([]", ")")]
+		[DataRow("([]{<", ">})")]
+		[DataRow("[({(<(())[]>[[{[]{<()<>>", "}}]])})]")]
+		[DataRow("[(()[<>])]({[<{<<[]>>(", ")}>]})")]
+		[DataRow("(((({<>}<{<{<>}{[]{[]{}", "}}>}>))))")]
+		[DataRow("{<[[]]>}<{[{[{[]{()[[[]", "]]}}]}]}>")]
+		[DataRow("<{([{{}}[<[[[<>{}]]]>[]]", "])}>")]
+		[DataTestMethod]
+		public void TestCompleteLine(string input, string output)
+		{
+			var result = SyntaxScorer.CompleteLine(input);
+			Assert.AreEqual(result, output);
 		}
 	}
 }
