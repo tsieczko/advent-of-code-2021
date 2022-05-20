@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day11
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = DumboOctopus2.Run(lines);
 
-			Assert.AreEqual(167379, result);
+			Assert.AreEqual(348, result);
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day11
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = DumboOctopus2.Run(lines);
 
-			Assert.AreEqual(26397, result);
+			Assert.AreEqual(195, result);
 		}
 	}
 }
