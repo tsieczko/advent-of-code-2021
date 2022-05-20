@@ -11,14 +11,14 @@ namespace AdventOfCode2021.Day11
 		public Octopus(int energy, int row, int column, Octopus[,] map)
 		{
 			Energy = energy;
-			Flashed = false;
+			CanFlash = false;
 			_location = (row, column);
 			_map = map;
 		}
 
 		public int Energy { get; set; }
 
-		public bool Flashed { get; set; }
+		public bool CanFlash { get; set; }
 
 		public IEnumerable<Octopus> GetNeighbors()
 		{

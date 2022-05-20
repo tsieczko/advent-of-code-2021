@@ -7,50 +7,71 @@ namespace AdventOfCode2021.Day11
 	{
 		public static int Run(string[] lines)
 		{
-			var octopuses = new Octopus[10, 10];
+			var rowLength = lines.Length;
+			var colLength = lines[0].Length;
+
+			var octopi = new Octopus[rowLength, colLength];
 
 			// load octopuses
-			foreach (var row in Enumerable.Range(0, 10))
+			foreach (var row in Enumerable.Range(0, rowLength))
 			{
-				foreach (var col in Enumerable.Range(0, 10))
+				foreach (var col in Enumerable.Range(0, colLength))
 				{
 					var energy = int.Parse(lines[row].Substring(col, 1));
-					octopuses[row, col] = new Octopus(energy, row, col, octopuses);
+					octopi[row, col] = new Octopus(energy, row, col, octopi);
 				}
 			}
 
 			var totalFlashes = 0;
 
-			// increase energy level and add to processing queue
-			var octopusQueue = new Queue<Octopus>();
-
-			foreach (var _ in Enumerable.Range(0, 10))
+			foreach (var _ in Enumerable.Range(0, 100))
 			{
-				foreach (var octopus in octopuses)
-				{
-					octopus.Energy += 1;
-					octopus.Flashed = false;
-					octopusQueue.Enqueue(octopus);
-				}
+				totalFlashes += DoFlashStep(octopi);
+			}
 
-				while (octopusQueue.Count > 0)
+			return totalFlashes;
+		}
+
+		public static int DoFlashStep(Octopus[,] octopi)
+		{
+			var octopusQueue = new Queue<Octopus>();
+			var numFlashes = 0;
+
+			// increase energy level by one
+			foreach (var octopus in octopi)
+			{
+				octopus.Energy += 1;
+				octopus.CanFlash = true;
+				octopusQueue.Enqueue(octopus);
+			}
+
+			// check and process flashes
+			while (octopusQueue.Count > 0)
+			{
+				var octopus = octopusQueue.Dequeue();
+				if (octopus.Energy > 9 && octopus.CanFlash)
 				{
-					var octopus = octopusQueue.Dequeue();
-					if (octopus.Energy > 9 && !octopus.Flashed)
+					octopus.Energy = 0;
+					octopus.CanFlash = false;
+					numFlashes += 1;
+					foreach (var neighbor in octopus.GetNeighbors())
 					{
-						octopus.Energy = 0;
-						octopus.Flashed = true;
-						totalFlashes += 1;
-						foreach (var neighbor in octopus.GetNeighbors())
-						{
-							neighbor.Energy += 1;
-							octopusQueue.Enqueue(neighbor);
-						}
+						neighbor.Energy += 1;
+						octopusQueue.Enqueue(neighbor);
 					}
 				}
 			}
 
-			return totalFlashes;
+			// set energy of flashed octopi to zero
+			foreach (var octopus in octopi)
+			{
+				if (!octopus.CanFlash)
+				{
+					octopus.Energy = 0;
+				}
+			}
+
+			return numFlashes;
 		}
 	}
 }

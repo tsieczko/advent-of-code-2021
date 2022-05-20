@@ -16,7 +16,7 @@ namespace AdventOfCode2021Tests.Day11
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = DumboOctopus1.Run(lines);
 
-			Assert.AreEqual(167379, result);
+			Assert.AreEqual(1647, result);
 		}
 
 		[TestMethod]
@@ -25,13 +25,13 @@ namespace AdventOfCode2021Tests.Day11
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = DumboOctopus1.Run(lines);
 
-			Assert.AreEqual(26397, result);
+			Assert.AreEqual(1656, result);
 		}
 
 		[TestMethod]
 		public void TestOctopus()
 		{
-			var octopuses = new Octopus[4,4];
+			var octopuses = new Octopus[4, 4];
 
 			// load octopuses
 			foreach (var row in Enumerable.Range(0, 4))
