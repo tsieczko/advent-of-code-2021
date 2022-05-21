@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using AdventOfCode2021.Day12;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,6 +27,33 @@ namespace AdventOfCode2021Tests.Day12
 			var result = PassagePathing1.Run(lines);
 
 			Assert.AreEqual(1656, result);
+		}
+
+		[TestMethod]
+		public void TestGraph()
+		{
+			var vertices = new List<int>() { 0, 1, 2 };
+			var edges = new List<(int, int)>() { (0, 1), (0, 2) };
+
+			var graph = new Graph<int>(vertices);
+			foreach (var edge in edges)
+			{
+				graph.AddEdge(edge.Item1, edge.Item2);
+				graph.AddEdge(edge.Item2, edge.Item1);
+			}
+
+			var expected = new[]
+			{
+				new[] { 0, 1 },
+				new[] { 0, 2 }
+			};
+
+			var paths = graph.Bfs();
+
+			for (var i = 0; i < expected.Length; i++)
+			{
+				CollectionAssert.AreEqual(expected[i], paths[i]);
+			}
 		}
 	}
 }
