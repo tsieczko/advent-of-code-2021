@@ -22,8 +22,7 @@ namespace AdventOfCode2021.Day12
 			var graph = new Graph<string>(verticesSet);
 			foreach (var edge in edges)
 			{
-				graph.AddEdge(edge.Item1, edge.Item2);
-				graph.AddEdge(edge.Item2, edge.Item1);
+				graph.AddEdge(edge);
 			}
 
 			var pathsToEnd = new List<List<string>>();
@@ -38,7 +37,7 @@ namespace AdventOfCode2021.Day12
 		{
 			history.Push(currentVertex);
 
-			if (currentVertex.Equals(endingVertex))
+			if (currentVertex == endingVertex)
 			{
 				pathsToEnd.Add(history.Reverse().ToList());
 			}
@@ -47,21 +46,15 @@ namespace AdventOfCode2021.Day12
 
 				foreach (var adjacentVertex in graph.AdjacencyList[currentVertex])
 				{
-					if (adjacentVertex is string adjacentVertexString)
+					// the vertex is capital, we can visit it any number of times
+					if (adjacentVertex.ToUpper() == adjacentVertex)
 					{
-						// the vertex is capital, we can visit it any number of times
-						if (adjacentVertexString.ToUpper() == adjacentVertexString)
-						{
-							FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
-						}
-						// otherwise we can only visit it once
-						else
-						{
-							if (history.Count(x => x.Equals(adjacentVertex)) < 1)
-							{
-								FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
-							}
-						}
+						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
+					}
+					// otherwise we can only visit it once
+					else if (history.Count(x => x == adjacentVertex) < 1)
+					{
+						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
 					}
 				}
 			}

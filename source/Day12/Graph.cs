@@ -18,5 +18,11 @@ namespace AdventOfCode2021.Day12
 		{
 			AdjacencyList[start].Add(end);
 		}
+
+		public void AddEdge((T start, T end) edge)
+		{
+			AdjacencyList[edge.start].Add(edge.end);
+			AdjacencyList[edge.end].Add(edge.start);
+		}
 	}
 }
