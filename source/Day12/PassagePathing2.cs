@@ -46,21 +46,28 @@ namespace AdventOfCode2021.Day12
 
 				foreach (var adjacentVertex in graph.AdjacencyList[currentVertex])
 				{
-					// the vertex is capital, we can visit it any number of times
-					if (adjacentVertex.ToUpper() == adjacentVertex)
-					{
-						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
-					}
 					// we can only visit the start or end once
-					else if (adjacentVertex == "start" || adjacentVertex == "end" && history.Any(x => x == adjacentVertex))
+					if (adjacentVertex == "start" || adjacentVertex == "end" && history.Any(x => x == adjacentVertex))
 					{
 						continue;
 					}
-					// otherwise we can only visit it twice
-					else if (history.Count(x => x == adjacentVertex) < 2)
+					// the vertex is capital, we can visit it any number of times
+					else if (adjacentVertex.ToUpper() == adjacentVertex)
 					{
 						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
 					}
+					// we can vist a single cave twice. check if we can vist twice.
+					else if (history.GroupBy(x => x).Select(x => x.Count()).All(x => x < 2))
+					{
+						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
+					}
+					// otherwise we can only visit it once
+					else if (history.Count(x => x == adjacentVertex) < 1)
+					{
+						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
+					}
+
+					var a = history.GroupBy(x => x).Select(x => (x.Key, x.Count())).Any(x => x.Item2 > 1);
 				}
 			}
 
