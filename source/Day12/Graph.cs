@@ -70,5 +70,61 @@ namespace AdventOfCode2021.Day12
 			}
 			historyStack.Pop();
 		}
+
+		public List<List<T>> Dfs(T startingVertex, T endingVertex)
+		{
+			var vertexVistCount = new Dictionary<T, int>();
+			foreach (var vertex in _adjacencyList.Keys)
+			{
+				vertexVistCount[vertex] = 0;
+			}
+			var pathsToEnd = new List<List<T>>();
+			var history = new Stack<T>();
+
+			DfsVisit(startingVertex, vertexVistCount, history, pathsToEnd, endingVertex);
+
+			return pathsToEnd; 
+		}
+
+		private void DfsVisit(T currentVertex, Dictionary<T, int> vertexVisitCount, Stack<T> history, List<List<T>> pathsToEnd, T endingVertex)
+		{
+			history.Push(currentVertex);
+
+			if (currentVertex.Equals(endingVertex))
+			{
+				pathsToEnd.Add(history.Reverse().ToList());
+			}
+			else
+			{
+				//vertexVisitCount[currentVertex]++;
+
+				foreach (var adjacentVertex in _adjacencyList[currentVertex])
+				{
+					if (adjacentVertex is string adjacentVertexString)
+					{
+						// the vertex is capital, we can visit it any number of times
+						if (adjacentVertexString.ToUpper() == adjacentVertexString)
+						{
+							//if (vertexVisitCount[adjacentVertex] < 2)
+							//if (history.Count(x => x.Equals(adjacentVertex)) < 2)
+							{
+								DfsVisit(adjacentVertex, vertexVisitCount, history, pathsToEnd, endingVertex);
+							}
+						}
+						// otherwise we can only visit it once
+						else
+						{
+							//if (vertexVisitCount[adjacentVertex] < 1)
+							if (history.Count(x => x.Equals(adjacentVertex)) < 1)
+							{
+								DfsVisit(adjacentVertex, vertexVisitCount, history, pathsToEnd, endingVertex);
+							}
+						}
+					}
+				}
+			}
+
+			history.Pop();
+		}
 	}
 }

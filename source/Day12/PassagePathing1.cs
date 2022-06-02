@@ -25,9 +25,9 @@ namespace AdventOfCode2021.Day12
 				graph.AddEdge(edge.Item2, edge.Item1);
 			}
 
-			var paths = graph.Bfs();
+			var paths = graph.Dfs("start", "end");
 
-			return -1;
+			return paths.Count;
 		}
 	}
 }
