@@ -29,7 +29,7 @@ namespace AdventOfCode2021Tests.Day12
 		}
 
 		[TestMethod]
-		public void TestGraphDfs()
+		public void TestFindPaths()
 		{
 			var vertices = new List<string>() { "start", "A", "b", "end" };
 			var edges = new List<(string, string)>() { ("start", "A"), ("A", "b"), ("b", "end") };
@@ -42,7 +42,10 @@ namespace AdventOfCode2021Tests.Day12
 				graph.AddEdge(edge.Item2, edge.Item1);
 			}
 
-			var paths = graph.Dfs("start", "end");
+			var paths = new List<List<string>>();
+			var history = new Stack<string>();
+
+			PassagePathing1.FindPaths("start", graph, history, paths, "end");
 
 			Assert.AreEqual(1, paths.Count);
 			CollectionAssert.AreEqual(new[] { "start", "A", "b", "end" }, paths[0]);
@@ -57,7 +60,10 @@ namespace AdventOfCode2021Tests.Day12
 				graph.AddEdge(edge.Item2, edge.Item1);
 			}
 
-			paths = graph.Dfs("start", "end");
+			paths = new List<List<string>>();
+			history = new Stack<string>();
+
+			PassagePathing1.FindPaths("start", graph, history, paths, "end");
 
 			Assert.AreEqual(2, paths.Count);
 			CollectionAssert.AreEqual(new[] { "start", "A", "end" }, paths[0]);
@@ -73,7 +79,10 @@ namespace AdventOfCode2021Tests.Day12
 				graph.AddEdge(edge.Item2, edge.Item1);
 			}
 
-			paths = graph.Dfs("start", "end");
+			paths = new List<List<string>>();
+			history = new Stack<string>();
+
+			PassagePathing1.FindPaths("start", graph, history, paths, "end");
 
 			Assert.AreEqual(5, paths.Count);
 			CollectionAssert.AreEqual(new[] { "start", "A", "b", "A", "end" }, paths[0]);
