@@ -24,7 +24,7 @@ namespace AdventOfCode2021Tests.Day12
 			var lines = File.ReadAllLines(TestInputPath);
 			var result = PassagePathing2.Run(lines);
 
-			Assert.AreEqual(195, result);
+			Assert.AreEqual(36, result);
 		}
 	}
 }
