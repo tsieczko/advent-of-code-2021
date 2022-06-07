@@ -15,7 +15,7 @@ namespace AdventOfCode2021Tests.Day12
 			var lines = File.ReadAllLines(PuzzleInputPath);
 			var result = PassagePathing2.Run(lines);
 
-			Assert.AreEqual(348, result);
+			Assert.AreEqual(84870, result);
 		}
 
 		[TestMethod]

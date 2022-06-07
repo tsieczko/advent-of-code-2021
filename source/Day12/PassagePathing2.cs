@@ -43,7 +43,6 @@ namespace AdventOfCode2021.Day12
 			}
 			else
 			{
-
 				foreach (var adjacentVertex in graph.AdjacencyList[currentVertex])
 				{
 					// we can only visit the start or end once
@@ -56,8 +55,8 @@ namespace AdventOfCode2021.Day12
 					{
 						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
 					}
-					// we can vist a single cave twice. check if we can vist twice.
-					else if (history.GroupBy(x => x).Select(x => x.Count()).All(x => x < 2))
+					// we can vist a single small cave twice. check if we can vist twice.
+					else if (history.Where(x => !x.IsUpper()).WordCount().All(x => x.Count < 2))
 					{
 						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
 					}
@@ -66,12 +65,22 @@ namespace AdventOfCode2021.Day12
 					{
 						FindPaths(adjacentVertex, graph, history, pathsToEnd, endingVertex);
 					}
-
-					var a = history.GroupBy(x => x).Select(x => (x.Key, x.Count())).Any(x => x.Item2 > 1);
 				}
 			}
 
 			history.Pop();
+		}
+
+		public static bool IsUpper(this string input)
+		{
+			return input.ToUpper() == input;
+		}
+
+		public static IEnumerable<(string Word, int Count)> WordCount(this IEnumerable<string> words)
+		{
+			return from word in words
+				   group word by word into groupedWords
+				   select (groupedWords.Key, groupedWords.Count());
 		}
 	}
 }
